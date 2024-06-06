@@ -22,14 +22,14 @@ jobs:
     - name: Install mdBook
       run: cargo install mdbook
 
-    - name: Install ImageMagick
-      run: sudo apt-get install -y imagemagick
+    - name: Install Krita
+      run: sudo apt-get install -y krita
 
     - name: Convert Krita files to PNG
       run: |
         mkdir -p book/src/images
         for file in ArtWork/*.kra; do
-          convert "$file" "book/src/images/$(basename "${file%.kra}.png")"
+          krita --export --export-filename "book/src/images/$(basename "${file%.kra}.png")" "$file"
         done
 
     - name: Build mdBook
