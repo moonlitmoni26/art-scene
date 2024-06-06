@@ -29,13 +29,13 @@ jobs:
 
     - name: Convert Krita files to PNG
       run: |
-        mkdir -p book/src/images
+        mkdir -p src/images
         for file in ArtWork/*.kra; do
-          xvfb-run --auto-servernum krita --export --export-filename "book/src/images/$(basename "${file%.kra}.png")" "$file"
+          xvfb-run --auto-servernum krita --export --export-filename "src/images/$(basename "${file%.kra}.png")" "$file"
         done
 
     - name: Build mdBook
-      run: mdbook build book
+      run: mdbook build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
