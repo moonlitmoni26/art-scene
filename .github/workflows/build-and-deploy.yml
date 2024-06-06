@@ -22,14 +22,16 @@ jobs:
     - name: Install mdBook
       run: cargo install mdbook
 
-    - name: Install Krita
-      run: sudo apt-get install -y krita
+    - name: Install Krita and Xvfb
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y krita xvfb
 
     - name: Convert Krita files to PNG
       run: |
         mkdir -p book/src/images
         for file in ArtWork/*.kra; do
-          krita --export --export-filename "book/src/images/$(basename "${file%.kra}.png")" "$file"
+          xvfb-run --auto-servernum krita --export --export-filename "book/src/images/$(basename "${file%.kra}.png")" "$file"
         done
 
     - name: Build mdBook
